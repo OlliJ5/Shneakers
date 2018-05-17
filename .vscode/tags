@@ -1,0 +1,15 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Item	../hello.py	/^class Item:$/;"	kind:class	line:4
+__init__	../hello.py	/^    def __init__(self, name):$/;"	kind:member	line:5
+app	../hello.py	/^app = Flask(__name__)$/;"	kind:variable	line:2
+content	../hello.py	/^def content():$/;"	kind:function	line:23
+esineet	../hello.py	/^esineet = []$/;"	kind:variable	line:12
+hello	../hello.py	/^def hello():$/;"	kind:function	line:19
+hello.py	../hello.py	1;"	kind:file	line:1
+lista	../hello.py	/^lista = [1, 1, 2, 3, 5, 8, 11]$/;"	kind:variable	line:10
+nimi	../hello.py	/^nimi = "Essi Esimerkki"$/;"	kind:variable	line:8
