@@ -1,6 +1,10 @@
 from application import app, db
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from application.threads.models import Thread
+
+@app.route("/threads", methods=["GET"])
+def threads_index():
+    return render_template("threads/list.html", threads = Thread.query.all())
 
 @app.route("/threads/new")
 def thread_form():
@@ -13,4 +17,4 @@ def threads_create():
     db.session().add(t)
     db.session().commit()
 
-    return "Lisäys onnistui!"
+    return redirect(url_for("threads_index"))
