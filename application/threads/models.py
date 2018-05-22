@@ -9,6 +9,6 @@ class Thread(db.Model):
     title = db.Column(db.String(144), nullable=False)
     text = db.Column(db.String(400), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, title, text):
         self.title = title
         self.text = text

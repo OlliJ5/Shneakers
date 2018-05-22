@@ -1,5 +1,6 @@
-from application import app
+from application import app, db
 from flask import render_template, request
+from application.threads.models import Thread
 
 @app.route("/threads/new")
 def thread_form():
@@ -7,6 +8,9 @@ def thread_form():
 
 @app.route("/threads/", methods=["POST"])
 def threads_create():
-    print(request.form.get("title"))
+    t = Thread(request.form.get("title"), request.form.get("text"))
 
-    return "hello world"
+    db.session().add(t)
+    db.session().commit()
+
+    return "Lisäys onnistui!"
