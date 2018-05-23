@@ -8,6 +8,10 @@
 
 
 <body>
+  <ul>
+    <li><a href="{{ url_for('threads_index') }}">List of Threads</a></li>
+    <li><a href="{{ url_for('thread_form') }}">Add a new Thread</a></li>
+  </ul>
   {% block body %}
     <p>
       Tavaraa tänne
