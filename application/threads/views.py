@@ -15,6 +15,16 @@ def thread_show(thread_id):
     t = Thread.query.get(thread_id)
     return render_template("threads/one.html", thread = t)
 
+@app.route("/threads/<thread_id>/", methods=["POST"])
+def thread_edit(thread_id):
+    t = Thread.query.get(thread_id)
+    
+    t.text = request.form.get("text")
+    t.date_modified = db.func.current_timestamp()
+    db.session().commit()
+
+    return redirect(url_for("thread_show", thread_id=t.id))
+
 
 @app.route("/threads/", methods=["POST"])
 def threads_create():

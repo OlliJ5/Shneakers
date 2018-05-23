@@ -4,4 +4,9 @@
   <h2>{{thread.title}}</h2>
   <p>{{thread.text}}</p>
 
+  <form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
+    <input type="text" name="text" value={{thread.text}}/>
+    <input type="submit" value="Edit content"/>
+  </form>
+
 {% endblock %}
