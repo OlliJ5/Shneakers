@@ -10,6 +10,12 @@ def threads_index():
 def thread_form():
     return render_template("threads/new.html")
 
+@app.route("/threads/<thread_id>")
+def thread_show(thread_id):
+    t = Thread.query.get(thread_id)
+    return render_template("threads/one.html", thread = t)
+
+
 @app.route("/threads/", methods=["POST"])
 def threads_create():
     t = Thread(request.form.get("title"), request.form.get("text"))
