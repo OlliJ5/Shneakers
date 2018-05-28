@@ -2,11 +2,12 @@
 
 Projekti kurssille tietokantasovellus
 
-Linkki sovellukseen herokussa:
+[Linkki sovellukseen herokussa](https://shneakers.herokuapp.com/)
 
-https://shneakers.herokuapp.com/
 
 [User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
+
+[Tietokantakaavio](https://github.com/OlliJ5/Shneakers/blob/master/documentation/Tietokantakaavio.png)
 
 ## Kuvaus
 
