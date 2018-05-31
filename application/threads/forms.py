@@ -7,3 +7,9 @@ class ThreadForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class ThreadEditForm(FlaskForm):
+    text = StringField("Muokkaa tekstiä ", [validators.Length(min=10)])
+
+    class Meta:
+        csrf = False

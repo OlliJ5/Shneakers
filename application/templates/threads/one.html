@@ -5,8 +5,30 @@
   <p>{{thread.text}}</p>
 
   <form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
-    <input type="text" name="text" value="{{thread.text}}"/>
-    <input type="submit" value="Edit content"/>
+    <table>
+      <tr>
+        <td>
+          {{ form.text.label }}
+        </td>
+        <td>
+          {{ form.text(value=thread.text) }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.text.errors %}
+            <li>
+              {{ error }}
+            </li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input type="submit" value="Muokkaa aloituksen sisältöä">
+        </td>
+      </tr>
+    </table>
   </form>
 
 {% endblock %}

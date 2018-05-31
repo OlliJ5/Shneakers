@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.threads.models import Thread
-from application.threads.forms import ThreadForm
+from application.threads.forms import ThreadForm, ThreadEditForm
 
 @app.route("/threads", methods=["GET"])
 def threads_index():
@@ -17,15 +17,15 @@ def thread_form():
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
-    return render_template("threads/one.html", thread = t)
+    return render_template("threads/one.html", thread = t, form = ThreadEditForm())
 
 @app.route("/threads/<thread_id>/", methods=["POST"])
 @login_required
 def thread_edit(thread_id):
+    form = ThreadEditForm(request.form)
     t = Thread.query.get(thread_id)
     
-    t.text = request.form.get("text")
-    t.date_modified = db.func.current_timestamp()
+    t.text = form.text.data
     db.session().commit()
 
     return redirect(url_for("thread_show", thread_id=t.id))
