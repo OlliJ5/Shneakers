@@ -14,6 +14,8 @@ from application import views
 from application.threads import models
 from application.threads import views
 
+from application.comments import models
+
 from application.auth import models
 from application.auth import views
 

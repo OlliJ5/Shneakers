@@ -10,6 +10,7 @@ class Thread(db.Model):
     text = db.Column(db.String(400), nullable=False)
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable = False)
+    comments = db.relationship("Comment", backref='thread', lazy=True)
 
     def __init__(self, title, text):
         self.title = title
