@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from application import app, db
 from application.threads.models import Thread
 from application.threads.forms import ThreadForm, ThreadEditForm
+from application.comments.forms import CommentForm
 
 @app.route("/threads", methods=["GET"])
 def threads_index():
@@ -17,8 +18,8 @@ def thread_form():
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
-    return render_template("threads/one.html", thread = t, form = ThreadEditForm())
 
+    return render_template("threads/one.html", thread = t, form = ThreadEditForm(), commentForm = CommentForm())
 @app.route("/threads/<thread_id>/", methods=["POST"])
 @login_required
 def thread_edit(thread_id):

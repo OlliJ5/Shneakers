@@ -30,5 +30,24 @@
       </tr>
     </table>
   </form>
+  <h3>Comments</h3>
+
+  <form action="POST" action="{{ url_for('comment_post') }}">
+    <table>
+      <tr>
+        <td>
+          {{ commentForm.text.label }}
+        </td>
+        <td>
+          {{ commentForm.text }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" value="Lisää kommentti">
+        </td>
+      </tr>
+    </table>
+  </form>
 
 {% endblock %}
