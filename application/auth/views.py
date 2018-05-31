@@ -36,13 +36,12 @@ def auth_form():
 def auth_create():
     form = UserForm(request.form)
 
-
-    ##if not form.validate():
-      ##  return render_template("auth/new.html", form = form)
+    if not form.validate():
+        return render_template("auth/new.html", form = form)
 
     u = User(form.name.data, form.username.data, form.password.data)
 
     db.session().add(u)
     db.session().commit()
     
-    return redirect(url_for("threads_index"))
+    return redirect(url_for("auth_login"))

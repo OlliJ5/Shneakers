@@ -1,5 +1,7 @@
-from application import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
+
+from application import app, db
 from application.threads.models import Thread
 from application.threads.forms import ThreadForm
 
@@ -8,6 +10,7 @@ def threads_index():
     return render_template("threads/list.html", threads = Thread.query.all())
 
 @app.route("/threads/new")
+@login_required
 def thread_form():
     return render_template("threads/new.html", form = ThreadForm())
 
@@ -17,6 +20,7 @@ def thread_show(thread_id):
     return render_template("threads/one.html", thread = t)
 
 @app.route("/threads/<thread_id>/", methods=["POST"])
+@login_required
 def thread_edit(thread_id):
     t = Thread.query.get(thread_id)
     
@@ -28,6 +32,7 @@ def thread_edit(thread_id):
 
 
 @app.route("/threads/", methods=["POST"])
+@login_required
 def threads_create():
     form = ThreadForm(request.form)
 
