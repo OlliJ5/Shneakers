@@ -4,6 +4,12 @@ Projekti kurssille tietokantasovellus
 
 [Linkki sovellukseen herokussa](https://shneakers.herokuapp.com/)
 
+Testitunnus:
+
+Käyttäjätunnu:testeri
+
+Salasana:salasana
+
 
 [User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
 
