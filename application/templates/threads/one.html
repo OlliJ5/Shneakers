@@ -30,9 +30,10 @@
       </tr>
     </table>
   </form>
+  
   <h3>Comments</h3>
 
-  <form action="POST" action="{{ url_for('comment_post') }}">
+  <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">
     <table>
       <tr>
         <td>
@@ -40,6 +41,15 @@
         </td>
         <td>
           {{ commentForm.text }}
+        </td>
+        <td>
+          <ul>
+            {% for error in commentForm.text.errors %}
+            <li>
+              {{ error }}
+            </li>
+            {% endfor %}
+          </ul>
         </td>
       </tr>
       <tr>
@@ -49,5 +59,13 @@
       </tr>
     </table>
   </form>
+
+  <ul>
+    {% for comment in comments %}
+    <li>
+      {{comment.text}}
+    </li>
+    {% endfor %}
+  </ul>
 
 {% endblock %}
