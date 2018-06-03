@@ -29,6 +29,11 @@ def thread_show(thread_id):
 def thread_edit(thread_id):
     form = ThreadEditForm(request.form)
     t = Thread.query.get(thread_id)
+    comments = Comment.query.filter_by(thread_id=thread_id).all()
+
+    if not form.validate():
+        return render_template("threads/one.html", thread = t, form = form, commentForm = CommentForm(), comments = comments)
+
     
     t.text = form.text.data
     db.session().commit()
