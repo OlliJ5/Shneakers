@@ -56,3 +56,14 @@ def threads_create():
     db.session().commit()
 
     return redirect(url_for("threads_index"))
+
+@app.route("/threads/delete/<thread_id>/", methods=["POST"])
+@login_required
+def thread_delete(thread_id):
+    t = Thread.query.get(thread_id)
+    Comment.query.filter_by(thread_id = thread_id).delete()
+
+    db.session().delete(t)
+    db.session().commit()
+
+    return redirect(url_for("threads_index"))
