@@ -21,8 +21,10 @@ def thread_form():
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
     comments = Comment.query.filter_by(thread_id=thread_id).all()
+    form = ThreadEditForm()
+    form.text.data = t.text
 
-    return render_template("threads/one.html", thread = t, form = ThreadEditForm(), commentForm = CommentForm(), comments = comments)
+    return render_template("threads/one.html", thread = t, form = form, commentForm = CommentForm(), comments = comments)
 
 @app.route("/threads/<thread_id>/", methods=["POST"])
 @login_required

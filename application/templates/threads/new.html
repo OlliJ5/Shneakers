@@ -2,46 +2,26 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('threads_create') }}">
-    <table>
-        <tr>
-            <td>
-                {{ form.title.label }}
-            </td>
-            <td>
-                {{ form.title  }}
-            </td>
-            <td>
-                <ul>
-                    {% for error in form.title.errors %}
-                    <li>
-                        {{ error }}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.text.label }}
-            </td>
-            <td>
-                {{ form.text }}
-            </td>
-            <td>
-                <ul>
-                    {% for error in form.text.errors %}
-                    <li>
-                        {{ error }}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-           <td colspan="2">
-               <input type="submit" value="Add a new thread"/>
-           </td> 
-        </tr>
-    </table>
+    <div class="form-group">
+        <p>{{ form.title.label }}</p>
+        <p>{{ form.title }}</p>
+        <ul>
+            {% for error in form.title.errors %}
+            <li>
+                {{error}}
+            </li>
+            {% endfor %}
+        </ul>
+        <p>{{ form.text.label }}</p>
+        <p>{{ form.text }}</p>
+        <ul>
+            {% for error in form.text.errors %}
+            <li>
+                {{error}}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <button type="submit">Add a new thread</button>
 </form>
 {% endblock %}

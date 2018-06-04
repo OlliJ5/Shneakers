@@ -1,69 +1,47 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <h2>{{thread.title}}</h2>
+  <h1>{{thread.title}}</h1>
   <p>{{thread.text}}</p>
 
   {% if current_user.id == thread.account_id %}
   <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
-    <input type="submit" value="Poista lanka">
+    <div class="form-group">
+      <button type="submit">Poista lanka</button>
+    </div>
   </form>
 
   <form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
-    <table>
-      <tr>
-        <td>
-          {{ form.text.label }}
-        </td>
-        <td>
-          {{ form.text(value=thread.text) }}
-        </td>
-        <td>
-          <ul>
-            {% for error in form.text.errors %}
-            <li>
-              {{ error }}
-            </li>
-            {% endfor %}
-          </ul>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <input type="submit" value="Muokkaa aloituksen sisältöä">
-        </td>
-      </tr>
-    </table>
+    <div class="form-group">
+      <p>{{ form.text.label }}</p>
+      <p>{{ form.text(value=thread.text) }}</p>
+      <ul>
+        {% for error in form.text.errors %}
+        <li>
+          {{ error }}
+        </li>
+        {% endfor %}
+      </ul>
+      <button type="submit">Muokkaa langan sisältöä</button>
+    </div>
   </form>
   {% endif %}
   
   <h3>Comments</h3>
 
   <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">
-    <table>
-      <tr>
-        <td>
-          {{ commentForm.text.label }}
-        </td>
-        <td>
-          {{ commentForm.text }}
-        </td>
-        <td>
-          <ul>
-            {% for error in commentForm.text.errors %}
-            <li>
-              {{ error }}
-            </li>
-            {% endfor %}
-          </ul>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input type="submit" value="Lisää kommentti">
-        </td>
-      </tr>
-    </table>
+    <div class="form-group">
+      {{ commentForm.text.label }}
+      {{ commentForm.text }}
+      <ul>
+        {% for error in commentForm.text.errors %}
+        <li>
+          {{ error }}
+        </li>
+        {% endfor %}
+      </ul>
+      <button type="submit">Lisää kommentti</button>
+    </div>
   </form>
 
   <ul>
