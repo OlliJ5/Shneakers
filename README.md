@@ -1,14 +1,18 @@
 # Shneakers
 
-Projekti kurssille tietokantasovellus
+Projekti kurssille tietokantasovellus, kesä 2018
+
+## Heroku
 
 [Linkki sovellukseen herokussa](https://shneakers.herokuapp.com/)
 
 Testitunnus:
 
-Käyttäjätunnu:testeri
+Käyttäjätunnus: testeri
 
-Salasana:salasana
+Salasana: salasana
+
+## Dokumentaatio
 
 
 [User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
