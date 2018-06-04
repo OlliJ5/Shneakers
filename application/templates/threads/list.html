@@ -1,10 +1,8 @@
 {% extends "layout.html" %} 
 
 {% block body %}
+  <h1>Threads</h1>
   <table>
-    <tr>
-      <th>Thread</th>
-    </tr>
     {% for thread in threads %}
     <tr>
       <td><a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a></td>
