@@ -52,6 +52,7 @@ def threads_create():
         return render_template("threads/new.html", form = form)
     
     t = Thread(form.title.data, form.text.data)
+    t.creator = current_user.username
     t.account_id = current_user.id
 
     db.session().add(t)
@@ -69,3 +70,4 @@ def thread_delete(thread_id):
     db.session().commit()
 
     return redirect(url_for("threads_index"))
+

@@ -22,6 +22,7 @@ def comment_post(thread_id):
     c = Comment(form.text.data)
     c.account_id = current_user.id
     c.thread_id = thread_id
+    c.creator = current_user.username
 
     db.session().add(c)
     db.session().commit()

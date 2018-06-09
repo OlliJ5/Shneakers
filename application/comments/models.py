@@ -7,6 +7,7 @@ class Comment(db.Model):
                                 onupdate=db.func.current_timestamp())
 
     text = db.Column(db.String(144), nullable=False)
+    creator = db.Column(db.String(144), nullable=False)
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     thread_id = db.Column(db.Integer, db.ForeignKey('thread.id'), nullable=False)

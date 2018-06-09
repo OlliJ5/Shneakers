@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <h1>{{thread.title}}</h1>
+  <h2>{{thread.title}}</h2>
+  <p>Kirjoittaja: {{thread.creator}}</p>
   <p>{{thread.text}}</p>
 
   {% if current_user.id == thread.account_id %}
@@ -44,12 +45,18 @@
     </div>
   </form>
 
-  <ul>
+
+  <table>
     {% for comment in comments %}
-    <li>
-      {{comment.text}}
-    </li>
+    <tr>
+      <td>
+        {{comment.creator}}:
+      </td>
+      <td>
+        {{comment.text}}
+      </td>
+    </tr>
     {% endfor %}
-  </ul>
+  </table>
 
 {% endblock %}
