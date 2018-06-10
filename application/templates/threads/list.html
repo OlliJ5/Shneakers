@@ -8,6 +8,7 @@
       <td>
         <h4>
           <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
+          [{{thread.category_name}}]
         </h4>
         <p>Kirjoittaja: {{thread.creator}}</p>
       </td>

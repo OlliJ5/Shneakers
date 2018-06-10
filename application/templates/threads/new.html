@@ -21,7 +21,17 @@
             </li>
             {% endfor %}
         </ul>
+        <p>{{ form.category.label }}</p>
+        <p>{{ form.category }}</p>
+        <ul>
+            {% for error in form.category.errors %}
+            <li>
+                {{error}}
+            </li>
+            {% endfor %}
+        </ul>
     </div>
     <button type="submit">Add a new thread</button>
 </form>
 {% endblock %}
+

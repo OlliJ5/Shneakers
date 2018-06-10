@@ -8,6 +8,8 @@ from application.threads.forms import ThreadForm, ThreadEditForm
 from application.comments.forms import CommentForm
 from application.comments.models import Comment
 
+from application.categories.models import Category
+
 @app.route("/threads", methods=["GET"])
 def threads_index():
     return render_template("threads/list.html", threads = Thread.query.all())
@@ -15,7 +17,9 @@ def threads_index():
 @app.route("/threads/new")
 @login_required
 def thread_form():
-    return render_template("threads/new.html", form = ThreadForm())
+    form = ThreadForm()
+    form.category.choices = [(c.id, c.name) for c in Category.query.all()]
+    return render_template("threads/new.html", form = form)
 
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
@@ -48,12 +52,14 @@ def thread_edit(thread_id):
 def threads_create():
     form = ThreadForm(request.form)
 
-    if not form.validate():
-        return render_template("threads/new.html", form = form)
+#    if not form.validate():
+ #       return render_template("threads/new.html", form = form)
     
     t = Thread(form.title.data, form.text.data)
     t.creator = current_user.username
     t.account_id = current_user.id
+    t.category_id = form.category.data
+    t.category_name = Category.query.filter_by(id = form.category.data).first().name
 
     db.session().add(t)
     db.session().commit()
