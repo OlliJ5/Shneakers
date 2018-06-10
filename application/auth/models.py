@@ -1,4 +1,5 @@
 from application import db
+from application.threads.models import UserInThread
 
 class User(db.Model):
 
@@ -15,6 +16,7 @@ class User(db.Model):
 
     createdThreads = db.relationship("Thread", backref='account', lazy=True)
     comments = db.relationship("Comment", backref='account', lazy=True)
+    threads = db.relationship("Thread", secondary=UserInThread, backref='account')
 
     def __init__(self, name, username, password):
         self.name = name
