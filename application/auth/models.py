@@ -1,14 +1,9 @@
 from application import db
-from application.threads.models import UserInThread
+from application.models import Base
 
-class User(db.Model):
+class User(Base):
 
     __tablename__ = "account"
-
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                              onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
@@ -16,7 +11,6 @@ class User(db.Model):
 
     createdThreads = db.relationship("Thread", backref='account', lazy=True)
     comments = db.relationship("Comment", backref='account', lazy=True)
-    threads = db.relationship("Thread", secondary=UserInThread, backref='account')
 
     def __init__(self, name, username, password):
         self.name = name

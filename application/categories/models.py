@@ -1,11 +1,7 @@
 from application import db
+from application.models import Base
 
-class Category(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                                onupdate=db.func.current_timestamp())
-
+class Category(Base):
     name = db.Column(db.String(144), nullable=False)
 
     threads = db.relationship("Thread", backref='category', lazy=True)
