@@ -5,4 +5,22 @@
         Shneakers
     </h1>
     <p>Tervetuloa käyttämään kenkähulluille suunnattua keskustelufoorumia!</p>
+    {% if leading_posters is defined %}
+    <h2>
+        Kaikki postaajat
+    </h2>
+
+    <table>
+        {% for poster in leading_posters %}
+        <tr>
+            <td>
+                {{poster.username}}
+            </td>
+            <td>
+                {{poster.posts}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 {% endblock %}
