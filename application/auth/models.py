@@ -1,5 +1,6 @@
 from application import db
 from application.models import Base
+#from application.threads.models import association_table
 
 from sqlalchemy.sql import text
 
@@ -10,9 +11,12 @@ class User(Base):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
+    admin = db.Column(db.Boolean, default=False)
 
     createdThreads = db.relationship("Thread", backref='account', lazy=True)
     comments = db.relationship("Comment", backref='account', lazy=True)
+
+    #threads = db.relationship("Thread", secondary=association_table, back_populates="accounts")
 
     def __init__(self, name, username, password):
         self.name = name

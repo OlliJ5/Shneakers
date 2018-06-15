@@ -47,24 +47,25 @@ def thread_edit(thread_id):
     return redirect(url_for("thread_show", thread_id=t.id))
 
 
-@app.route("/threads/", methods=["POST"])
+@app.route("/threads/new", methods=["GET", "POST"])
 @login_required
 def threads_create():
-    form = ThreadForm(request.form)
+    form = ThreadForm()
+    form.category.choices = [(c.id, c.name) for c in Category.query.all()]
 
-#    if not form.validate():
- #       return render_template("threads/new.html", form = form)
-    
-    t = Thread(form.title.data, form.text.data)
-    t.creator = current_user.username
-    t.account_id = current_user.id
-    t.category_id = form.category.data
-    t.category_name = Category.query.filter_by(id = form.category.data).first().name
+    if form.validate_on_submit():
+        t = Thread(form.title.data, form.text.data)
+        t.creator = current_user.username
+        t.account_id = current_user.id
+        t.category_id = form.category.data
+        t.category_name = Category.query.filter_by(id = form.category.data).first().name
+        db.session().add(t)
+        db.session().commit()
+        return redirect(url_for("threads_index"))
+        
+    return render_template("threads/new.html", form = form)
 
-    db.session().add(t)
-    db.session().commit()
 
-    return redirect(url_for("threads_index"))
 
 @app.route("/threads/delete/<thread_id>/", methods=["POST"])
 @login_required
