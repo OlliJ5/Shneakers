@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.comments.models import Comment
 from application.comments.forms import CommentForm
 
@@ -9,7 +9,7 @@ from application.threads.forms import ThreadForm
 from application.threads.models import Thread
 
 @app.route("/comments/<thread_id>", methods=["POST"])
-@login_required
+@login_required()
 def comment_post(thread_id):
     form = CommentForm(request.form)
 

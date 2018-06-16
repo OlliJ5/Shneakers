@@ -11,17 +11,18 @@ class User(Base):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
-    admin = db.Column(db.Boolean, default=False)
+    role = db.Column(db.String(144), nullable=False)
 
     createdThreads = db.relationship("Thread", backref='account', lazy=True)
     comments = db.relationship("Comment", backref='account', lazy=True)
 
     #threads = db.relationship("Thread", secondary=association_table, back_populates="accounts")
 
-    def __init__(self, name, username, password):
+    def __init__(self, name, username, password, role):
         self.name = name
         self.username = username
         self.password = password
+        self.role = role
   
     def get_id(self):
         return self.id
@@ -34,6 +35,9 @@ class User(Base):
 
     def is_authenticated(self):
         return True
+
+    def get_role(self):
+        return self.role
 
     @staticmethod
     def find_how_many_tasks_each_user_has():

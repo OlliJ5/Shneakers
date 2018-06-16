@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required, login_manager
 from application.threads.models import Thread
 from application.threads.forms import ThreadForm, ThreadEditForm
 
@@ -15,7 +15,7 @@ def threads_index():
     return render_template("threads/list.html", threads = Thread.query.all())
 
 @app.route("/threads/new")
-@login_required
+@login_required()
 def thread_form():
     form = ThreadForm()
     form.category.choices = [(c.id, c.name) for c in Category.query.all()]
@@ -31,10 +31,14 @@ def thread_show(thread_id):
     return render_template("threads/one.html", thread = t, form = form, commentForm = CommentForm(), comments = comments)
 
 @app.route("/threads/<thread_id>/", methods=["POST"])
-@login_required
+@login_required()
 def thread_edit(thread_id):
     form = ThreadEditForm(request.form)
     t = Thread.query.get(thread_id)
+
+    if t.account_id != current_user.id:
+        return login_manager.unauthorized()
+
     comments = Comment.query.filter_by(thread_id=thread_id).all()
 
     if not form.validate():
@@ -48,7 +52,7 @@ def thread_edit(thread_id):
 
 
 @app.route("/threads/new", methods=["GET", "POST"])
-@login_required
+@login_required()
 def threads_create():
     form = ThreadForm()
     form.category.choices = [(c.id, c.name) for c in Category.query.all()]
@@ -68,9 +72,13 @@ def threads_create():
 
 
 @app.route("/threads/delete/<thread_id>/", methods=["POST"])
-@login_required
+@login_required()
 def thread_delete(thread_id):
     t = Thread.query.get(thread_id)
+
+    if t.account_id != current_user.id:
+        return login_manager.unauthorized()
+
     Comment.query.filter_by(thread_id = thread_id).delete()
 
     db.session().delete(t)
