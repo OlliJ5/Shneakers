@@ -78,6 +78,12 @@ def user_delete(user_id):
         return login_manager.unauthorized()
     
     Comment.query.filter_by(account_id = user_id).delete()
+
+    threads = Thread.query.filter_by(account_id = user_id).all()
+
+    for thread in threads:
+        Comment.query.filter_by(thread_id = thread.id).delete()
+
     Thread.query.filter_by(account_id = user_id).delete()
 
     db.session().delete(u)
