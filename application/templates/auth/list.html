@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <h1>Users</h1>
+  <table>
+    {% for user in users %}
+    <tr>
+      <td>
+        <p>
+          {{user.username}} [{{user.role}}]
+        </p>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}">
+          <button type="submit">Poista käyttäjä</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

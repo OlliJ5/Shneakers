@@ -1,9 +1,12 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from application import app, db, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm
+
+from application.comments.models import Comment
+from application.threads.models import Thread
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -60,3 +63,24 @@ def auth_create_admin():
         return redirect(url_for("auth_create_admin"))
     
     return render_template("auth/newAdmin.html", form = form)
+
+@app.route("/auth/users", methods=["GET"])
+@login_required("ADMIN")
+def auth_show_users():
+    return render_template("auth/list.html", users = User.query.all())
+
+@app.route("/auth/delete/<user_id>", methods=["POST"])
+@login_required()
+def user_delete(user_id):
+    u = User.query.get(user_id)
+
+    if current_user.role != "ADMIN":
+        return login_manager.unauthorized()
+    
+    Comment.query.filter_by(account_id = user_id).delete()
+    Thread.query.filter_by(account_id = user_id).delete()
+
+    db.session().delete(u)
+    db.session().commit()
+
+    return redirect(url_for("auth_show_users"))

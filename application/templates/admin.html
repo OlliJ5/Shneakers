@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <p><a href="{{ url_for('category_create') }}">Add a new category</a></p>
+  <p><a href="{{ url_for('auth_create_admin') }}">Add a new admin user</a></p>
+  <p><a href="{{ url_for('auth_show_users') }}">List of all users</a></p>
+{% endblock %}

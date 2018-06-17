@@ -25,7 +25,7 @@
             </li>
             {% if current_user.role == "ADMIN" %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('category_create') }}">Kategoriat</a>
+              <a class="nav-link" href="{{ url_for('admin_view') }}">ADMIN</a>
             </li>
             {% endif %}
           </ul>
