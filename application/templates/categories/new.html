@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <h2>Category page</h2>
+
+  <form method="POST" action="{{ url_for('category_create') }}">
+    <div class="form-group">
+      {{ form.name.label }}
+      {{ form.name }}
+      <br>
+      <button type="submit">Lisää kategoria</button>
+    </div>
+  </form>
+
+  <ul>
+    {% for category in categories %}
+    <li>
+      {{category.name}}
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% endblock %}

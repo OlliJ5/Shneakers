@@ -14,13 +14,6 @@ from application.categories.models import Category
 def threads_index():
     return render_template("threads/list.html", threads = Thread.query.all())
 
-@app.route("/threads/new")
-@login_required()
-def thread_form():
-    form = ThreadForm()
-    form.category.choices = [(c.id, c.name) for c in Category.query.all()]
-    return render_template("threads/new.html", form = form)
-
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
