@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
 
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm
 
@@ -45,3 +45,18 @@ def auth_create():
     db.session().commit()
     
     return redirect(url_for("auth_login"))
+
+@app.route("/auth/create/admin", methods = ["GET", "POST"])
+@login_required("ADMIN")
+def auth_create_admin():
+    form = UserForm()
+    
+    if form.validate_on_submit():
+        u = User(form.name.data, form.username.data, form.password.data, "ADMIN")
+
+        db.session().add(u)
+        db.session().commit()
+
+        return redirect(url_for("auth_create_admin"))
+    
+    return render_template("auth/newAdmin.html", form = form)
