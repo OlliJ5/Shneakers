@@ -14,6 +14,11 @@ from application.categories.models import Category
 def threads_index():
     return render_template("threads/list.html", threads = Thread.query.all())
 
+@app.route("/threads/<category_name>", methods=["GET"])
+def threads_by_category(category_name):
+    return render_template("threads/list.html",
+                            threads = Thread.query.filter_by(category_name=category_name).all())
+
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
