@@ -5,13 +5,15 @@
   <p>Kirjoittaja: {{thread.creator}}</p>
   <p>{{thread.text}}</p>
 
-  {% if current_user.id == thread.account_id %}
+  {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
   <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
     <div class="form-group">
       <button type="submit">Poista lanka</button>
     </div>
   </form>
+  {% endif %}
 
+  {% if current_user.id == thread.account_id %}
   <form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
     <div class="form-group">
       <p>{{ form.text.label }}</p>

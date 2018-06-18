@@ -69,7 +69,7 @@ def threads_create():
 def thread_delete(thread_id):
     t = Thread.query.get(thread_id)
 
-    if t.account_id != current_user.id:
+    if t.account_id != current_user.id and current_user.role != "ADMIN":
         return login_manager.unauthorized()
 
     Comment.query.filter_by(thread_id = thread_id).delete()
