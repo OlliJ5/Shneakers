@@ -34,7 +34,7 @@ def comment_post(thread_id):
 def comment_delete(comment_id):
     c = Comment.query.get(comment_id)
 
-    if c.account_id != current_user.id:
+    if c.account_id != current_user.id and current_user.role != "ADMIN":
         return login_manager.unauthorized()
 
     Comment.query.filter_by(id = comment_id).delete()
