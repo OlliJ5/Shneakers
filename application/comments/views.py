@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 
-from application import app, db, login_required
+from application import app, db, login_required, login_manager
 from application.comments.models import Comment
 from application.comments.forms import CommentForm
 
@@ -28,3 +28,18 @@ def comment_post(thread_id):
     db.session().commit()
 
     return redirect(url_for("thread_show", thread_id = thread_id))
+
+@app.route("/comments/delete/<comment_id>", methods=["POST"])
+@login_required()
+def comment_delete(comment_id):
+    c = Comment.query.get(comment_id)
+
+    if c.account_id != current_user.id:
+        return login_manager.unauthorized()
+
+    Comment.query.filter_by(id = comment_id).delete()
+
+    db.session().delete(c)
+    db.session().commit()
+
+    return redirect(url_for("threads_index"))

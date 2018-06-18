@@ -56,6 +56,15 @@
         {{comment.text}}
       </td>
     </tr>
+    {% if current_user.id == comment.account_id %}
+    <tr>
+      <td colspan="2">
+        <form method="POST" action="{{ url_for('comment_delete', comment_id=comment.id) }}">
+          <button type="submit">Poista kommentti</button>
+        </form>        
+      </td>
+    </tr>
+    {% endif %}
     {% endfor %}
   </table>
 
