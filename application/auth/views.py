@@ -69,6 +69,12 @@ def auth_create_admin():
 def auth_show_users():
     return render_template("auth/list.html", users = User.query.all())
 
+@app.route("/auth/users/<user_id>", methods=["GET"])
+def user_profile(user_id):
+    u = User.query.get(user_id)
+
+    return render_template("auth/profile.html", user = u)
+
 @app.route("/auth/delete/<user_id>", methods=["POST"])
 @login_required()
 def user_delete(user_id):

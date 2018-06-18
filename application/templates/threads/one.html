@@ -2,7 +2,7 @@
 
 {% block body %}
   <h2>{{thread.title}}</h2>
-  <p>Kirjoittaja: {{thread.creator}}</p>
+  <p>Kirjoittaja: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
   <p>{{thread.text}}</p>
 
   {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
@@ -32,6 +32,7 @@
   
   <h3>Comments</h3>
 
+  {% if current_user.is_authenticated %}
   <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">
     <div class="form-group">
       {{ commentForm.text.label }}
@@ -46,13 +47,14 @@
       <button type="submit">Lisää kommentti</button>
     </div>
   </form>
+  {% endif %}
 
 
   <table>
     {% for comment in comments %}
     <tr>
       <td>
-        {{comment.creator}}:
+        <a href="{{ url_for('user_profile', user_id=comment.account_id) }}">{{comment.creator}}:</a>
       </td>
       <td>
         {{comment.text}}

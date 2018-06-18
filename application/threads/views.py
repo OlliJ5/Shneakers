@@ -10,11 +10,12 @@ from application.comments.models import Comment
 
 from application.categories.models import Category
 
-@app.route("/threads", methods=["GET"])
+@app.route("/threads/all", methods=["GET"])
 def threads_index():
-    return render_template("threads/list.html", threads = Thread.query.all())
+    return render_template("threads/list.html",
+                            threads = Thread.query.all())
 
-@app.route("/threads/<category_name>", methods=["GET"])
+@app.route("/threads/all/<category_name>", methods=["GET"])
 def threads_by_category(category_name):
     return render_template("threads/list.html",
                             threads = Thread.query.filter_by(category_name=category_name).all())

@@ -10,7 +10,7 @@
           <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
           [{{thread.category_name}}]
         </h4>
-        <p>Kirjoittaja: {{thread.creator}}</p>
+        <p>Kirjoittaja: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
       </td>
     </tr>
     {% endfor %}
