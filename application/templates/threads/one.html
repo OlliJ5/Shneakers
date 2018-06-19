@@ -8,7 +8,7 @@
   {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
   <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
     <div class="form-group">
-      <button type="submit">Poista lanka</button>
+      <button type="submit" class="btn btn-danger">Poista lanka</button>
     </div>
   </form>
   {% endif %}
@@ -34,20 +34,20 @@
 
   {% if current_user.is_authenticated %}
   <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">
-    <div class="form-group">
+    <div class=form-group>
       {{ commentForm.text.label }}
-      {{ commentForm.text }}
+      {{ commentForm.text(class="form-control", placeholder="Speak up boi")}}
       <ul>
         {% for error in commentForm.text.errors %}
         <li>
-          {{ error }}
+          {{error}}
         </li>
         {% endfor %}
       </ul>
-      <button type="submit">Lisää kommentti</button>
     </div>
-  </form>
+    <button type="submit" class="btn btn-primary">Add comment</button>
   {% endif %}
+
 
 
   <table>

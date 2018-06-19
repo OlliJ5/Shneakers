@@ -1,8 +1,13 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
 {% block body %}
-  <h1>Threads</h1>
-  <div class="dropdown">
+
+<div class="row">
+  <div class="col-3">
+    <h1>Threads</h1>
+  </div>
+  <div class="col">
+    <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
         Filter
@@ -14,19 +19,24 @@
         {% endfor %}
       </div>
     </div>
-  <table>
-    {% for thread in threads %}
-    <tr>
-      <td>
-        <h4>
-          <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
-          [{{thread.category_name}}]
-        </h4>
-        <p>Kirjoittaja: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+  </div>
+</div>
+
+<table>
+  {% for thread in threads %}
+  <tr>
+    <td>
+      <h5>
+        <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
+        [{{thread.category_name}}]
+      </h5>
+      <p>Kirjoittaja:
+        <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
+      </p>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
 
 {% endblock %}
