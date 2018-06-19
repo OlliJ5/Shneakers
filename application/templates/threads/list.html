@@ -2,6 +2,18 @@
 
 {% block body %}
   <h1>Threads</h1>
+  <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        Filter
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ url_for('threads_index') }}">All</a>
+        {% for category in categories %}
+        <a class="dropdown-item" href="{{ url_for('threads_by_category', category_name=category.name) }}">{{category.name}}</a>
+        {% endfor %}
+      </div>
+    </div>
   <table>
     {% for thread in threads %}
     <tr>
