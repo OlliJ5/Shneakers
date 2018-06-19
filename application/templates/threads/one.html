@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <h2>{{thread.title}}</h2>
+  <h3>{{thread.title}}</h3>
   <p>Kirjoittaja: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
   <p>{{thread.text}}</p>
 
@@ -30,7 +30,7 @@
   </form>
   {% endif %}
   
-  <h3>Comments</h3>
+  <h4>Comments</h4>
 
   {% if current_user.is_authenticated %}
   <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">

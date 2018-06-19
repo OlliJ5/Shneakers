@@ -33,13 +33,12 @@ def comment_post(thread_id):
 @login_required()
 def comment_delete(comment_id):
     c = Comment.query.get(comment_id)
+    thread = c.thread_id
 
     if c.account_id != current_user.id and current_user.role != "ADMIN":
         return login_manager.unauthorized()
 
-    Comment.query.filter_by(id = comment_id).delete()
-
     db.session().delete(c)
     db.session().commit()
 
-    return redirect(url_for("threads_index"))
+    return redirect(url_for("thread_show", thread_id=thread))
