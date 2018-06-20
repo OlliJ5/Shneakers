@@ -29,6 +29,32 @@ def comment_post(thread_id):
 
     return redirect(url_for("thread_show", thread_id = thread_id))
 
+@app.route("/comments/edit/<comment_id>")
+@login_required()
+def comment_editform(comment_id):
+    c = Comment.query.get(comment_id)
+    form = CommentForm()
+    form.text.data = c.text
+
+    return render_template("comments/edit.html", comment = c, form = form)
+
+@app.route("/comment/edit/<comment_id>", methods=["POST"])
+@login_required()
+def comment_edit(comment_id):
+    form = CommentForm(request.form)
+    c = Comment.query.get(comment_id)
+
+    if c.account_id != current_user.id:
+        return login_manager.unauthorized()
+    
+    if not form.validate():
+        return render_template("comments/edit.html", comment = c, form = form)
+
+    c.text = form.text.data
+    db.session().commit()
+
+    return redirect(url_for("thread_show", thread_id=c.thread_id))
+
 @app.route("/comments/delete/<comment_id>", methods=["POST"])
 @login_required()
 def comment_delete(comment_id):

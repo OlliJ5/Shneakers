@@ -26,10 +26,13 @@ def threads_by_category(category_name):
 
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
+    user_thread = UserThread(thread_id)
+
     if current_user.is_authenticated:
-        user_thread = UserThread(current_user.id, thread_id)
-        db.session().add(user_thread)
-        db.session().commit()    
+        user_thread.account_id = current_user.id
+
+    db.session().add(user_thread)
+    db.session().commit()    
 
     t = Thread.query.get(thread_id)
     comments = Comment.query.filter_by(thread_id=thread_id).all()

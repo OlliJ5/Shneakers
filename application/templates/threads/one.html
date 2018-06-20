@@ -51,6 +51,11 @@
       <a href="{{ url_for('user_profile', user_id=comment.account.id) }}">{{comment.creator}}</a>
     </div>
     <div class="col">
+      {% if current_user.id == comment.account_id %}
+      <a href="{{ url_for('comment_editform', comment_id=comment.id) }}">Edit comment</a>
+      {% endif %}
+    </div>
+    <div class="col">
       {% if current_user.id == comment.account_id or current_user.role == "ADMIN" %}
       <form method="POST" action="{{ url_for('comment_delete', comment_id=comment.id) }}">
         <button type="submit" class="btn btn-danger">Delete this nephew</button>
