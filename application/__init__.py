@@ -71,6 +71,8 @@ from application.categories import models
 
 from application.auth.models import User
 
+from application.user_thread.models import UserThread
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

@@ -10,6 +10,8 @@ from application.comments.models import Comment
 
 from application.categories.models import Category
 
+from application.user_thread.models import UserThread
+
 @app.route("/threads/all", methods=["GET"])
 def threads_index():
     return render_template("threads/list.html",
@@ -24,6 +26,11 @@ def threads_by_category(category_name):
 
 @app.route("/threads/<thread_id>")
 def thread_show(thread_id):
+    if current_user.is_authenticated:
+        user_thread = UserThread(current_user.id, thread_id)
+        db.session().add(user_thread)
+        db.session().commit()    
+
     t = Thread.query.get(thread_id)
     comments = Comment.query.filter_by(thread_id=thread_id).all()
 
@@ -50,7 +57,7 @@ def thread_edit(thread_id):
     comments = Comment.query.filter_by(thread_id=thread_id).all()
 
     if not form.validate():
-        return render_template("threads/one.html", thread = t, form = form, commentForm = CommentForm(), comments = comments)
+        return render_template("threads/edit.html", thread = t, form = form)
 
     
     t.text = form.text.data

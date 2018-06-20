@@ -1,11 +1,6 @@
 from application import db
 from application.models import Base
 
-#association_table = db.Table('UsersInThread', Base.metadata,
- #   db.Column('thread_id', db.Integer, db.ForeignKey('thread.id')),
-  #  db.Column('account_id', db.Integer, db.ForeignKey('account.id'))
-#)
-
 
 class Thread(Base):
     title = db.Column(db.String(144), nullable=False)
@@ -17,7 +12,7 @@ class Thread(Base):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable = False)
     comments = db.relationship("Comment", backref='thread', lazy=True)
 
-    #accounts = db.relationship("Account", secondary=association_table, back_populates="threads")
+    thread_users = db.relationship("UserThread", backref='thread', lazy=True)
 
     def __init__(self, title, text):
         self.title = title
