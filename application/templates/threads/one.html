@@ -1,75 +1,70 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <h3>{{thread.title}}</h3>
-  <p>Kirjoittaja: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
-  <p>{{thread.text}}</p>
 
-  {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
-  <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
-    <div class="form-group">
-      <button type="submit" class="btn btn-danger">Poista lanka</button>
-    </div>
-  </form>
-  {% endif %}
+<p style="font-size: 25px; font-weight: bold; word-wrap: break-word;">{{thread.title}}</p>
+<p>OP:
+  <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
+</p>
+<p>{{thread.text}}</p>
 
-  {% if current_user.id == thread.account_id %}
-  <form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
-    <div class="form-group">
-      <p>{{ form.text.label }}</p>
-      <p>{{ form.text(value=thread.text) }}</p>
-      <ul>
-        {% for error in form.text.errors %}
-        <li>
-          {{ error }}
-        </li>
-        {% endfor %}
-      </ul>
-      <button type="submit">Muokkaa langan sisältöä</button>
-    </div>
-  </form>
-  {% endif %}
-  
-  <h4>Comments</h4>
-
-  {% if current_user.is_authenticated %}
-  <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}">
-    <div class=form-group>
-      {{ commentForm.text.label }}
-      {{ commentForm.text(class="form-control", placeholder="Speak up boi")}}
-      <ul>
-        {% for error in commentForm.text.errors %}
-        <li>
-          {{error}}
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <button type="submit" class="btn btn-primary">Add comment</button>
-  {% endif %}
-
-
-
-  <table>
-    {% for comment in comments %}
-    <tr>
-      <td>
-        <a href="{{ url_for('user_profile', user_id=comment.account_id) }}">{{comment.creator}}:</a>
-      </td>
-      <td>
-        {{comment.text}}
-      </td>
-    </tr>
-    {% if current_user.id == comment.account_id or current_user.role == "ADMIN" %}
-    <tr>
-      <td colspan="2">
-        <form method="POST" action="{{ url_for('comment_delete', comment_id=comment.id) }}">
-          <button type="submit">Poista kommentti</button>
-        </form>        
-      </td>
-    </tr>
+<div class="row" style="padding-top: 20px; padding-bottom: 30px">
+  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+    {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
+    <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
+      <div class="form-group">
+        <button type="submit" class="btn btn-danger">Delete thread</button>
+      </div>
+    </form>
     {% endif %}
-    {% endfor %}
-  </table>
+  </div>
+  <div class="col">
+    {% if current_user.id == thread.account_id %}
+    <a href="{{ url_for('thread_editform', thread_id=thread.id) }}">Edit thread</a>
+    {% endif %}
+  </div>
+</div>
+
+<h5>Comments</h5>
+
+{% if current_user.is_authenticated %}
+<form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}" style="padding-bottom: 50px; padding-top: 20px">
+  <div class=form-group>
+    {{ commentForm.text.label }} {{ commentForm.text(class="form-control", placeholder="Speak up boi")}}
+    <ul>
+      {% for error in commentForm.text.errors %}
+      <li>
+        {{error}}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <button type="submit" class="btn btn-primary">Add comment</button>
+</form>
+{% endif %}
+
+<ul class="list-group list-group-flush" style="padding-top: 50px">
+  {% for comment in comments %}
+  <li class="list-group-item">
+  <div class="row">
+    <div class="col">
+      <a href="{{ url_for('user_profile', user_id=comment.account.id) }}">{{comment.creator}}</a>
+    </div>
+    <div class="col">
+      {% if current_user.id == comment.account_id or current_user.role == "ADMIN" %}
+      <form method="POST" action="{{ url_for('comment_delete', comment_id=comment.id) }}">
+        <button type="submit" class="btn btn-danger">Delete this nephew</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {{ comment.text }}
+    </div>
+  </div>
+  </li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

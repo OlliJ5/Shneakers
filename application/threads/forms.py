@@ -10,7 +10,7 @@ class ThreadForm(FlaskForm):
         csrf = False
 
 class ThreadEditForm(FlaskForm):
-    text = TextAreaField("Muokkaa tekstiä ", [validators.DataRequired(), validators.Length(min=10)], render_kw={"rows":6, "cols": 40})
+    text = TextAreaField("Edit thread's content ", [validators.DataRequired(), validators.Length(min=10)], render_kw={"rows":6, "cols": 40})
 
     class Meta:
         csrf = False

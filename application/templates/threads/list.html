@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} 
 
 {% block body %}
 
 <div class="row">
-  <div class="col-3">
+  <div class="col-lg-3 cl-md-3 col-sm-4 col-xs-12">
     <h1>Threads</h1>
   </div>
   <div class="col">
@@ -22,21 +22,22 @@
   </div>
 </div>
 
-<table>
-  {% for thread in threads %}
-  <tr>
-    <td>
-      <h5>
-        <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
-        [{{thread.category_name}}]
-      </h5>
-      <p>Kirjoittaja:
-        <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
-      </p>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-
+{% for thread in threads %}
+<div class="row">
+  <div class="col">
+    <h5 style="word-wrap: break-word;">
+      <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
+      [{{thread.category_name}}]
+    </h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <p>Kirjoittaja:
+      <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
+    </p>
+  </div>
+</div>
+{% endfor %}
 
 {% endblock %}

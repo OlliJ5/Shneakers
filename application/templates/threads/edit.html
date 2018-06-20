@@ -1,0 +1,24 @@
+{% extends "layout.html" %} 
+
+{% block body %} 
+  <h4>{{thread.title}}</h4>
+  <p>OP: <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a></p>
+
+{% if current_user.id == thread.account_id %}
+<form method="POST" action="{{ url_for('thread_edit', thread_id=thread.id) }}">
+  <div class="form-group">
+    {{ form.text.label }}
+    {{ form.text(class="form-control")}}
+    <ul>
+      {% for error in form.text.errors %}
+      <li>
+        {{error}}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <button type="submit">Save changes</button>
+</form>
+{% endif %}
+
+{% endblock %}

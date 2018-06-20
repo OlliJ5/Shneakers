@@ -26,12 +26,19 @@ def threads_by_category(category_name):
 def thread_show(thread_id):
     t = Thread.query.get(thread_id)
     comments = Comment.query.filter_by(thread_id=thread_id).all()
+
+    return render_template("threads/one.html", thread = t, commentForm = CommentForm(), comments = comments)
+
+@app.route("/thread/<thread_id>/edit")
+def thread_editform(thread_id):
+    t = Thread.query.get(thread_id)
+    comments = Comment.query.filter_by(thread_id=thread_id).all()
     form = ThreadEditForm()
     form.text.data = t.text
 
-    return render_template("threads/one.html", thread = t, form = form, commentForm = CommentForm(), comments = comments)
+    return render_template("threads/edit.html", thread = t, form = form)
 
-@app.route("/threads/<thread_id>/", methods=["POST"])
+@app.route("/threads/<thread_id>/edit", methods=["POST"])
 @login_required()
 def thread_edit(thread_id):
     form = ThreadEditForm(request.form)
