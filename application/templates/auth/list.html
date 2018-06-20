@@ -2,20 +2,34 @@
 
 {% block body %}
   <h1>Users</h1>
-  <table>
-    {% for user in users %}
-    <tr>
-      <td>
-        <p>
-          {{user.username}} [{{user.role}}]
-        </p>
-      </td>
-      <td>
-        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}">
-          <button type="submit">Poista käyttäjä</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+
+  <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Created</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{user.id}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.date_created}}</td>
+          <td>
+            <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}">
+              <button type="submit" class="btn btn-danger btn-md"> Delete user</button>
+            </form>              
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+
 {% endblock %}

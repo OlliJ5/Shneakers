@@ -98,6 +98,7 @@ def thread_delete(thread_id):
         return login_manager.unauthorized()
 
     Comment.query.filter_by(thread_id = thread_id).delete()
+    UserThread.query.filter_by(thread_id = thread_id).delete()
 
     db.session().delete(t)
     db.session().commit()
