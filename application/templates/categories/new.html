@@ -3,15 +3,25 @@
 {% block body %}
   <h2>Category page</h2>
 
+  
   <form method="POST" action="{{ url_for('category_create') }}">
     <div class="form-group">
-      {{ form.name.label }}
-      {{ form.name }}
-      <br>
-      <button type="submit">Lisää kategoria</button>
+      {{form.name.label}}
+      {{form.name(class="form-control", placeholder="Enter a new category")}}
+      <div class="text-warning">
+        <ul>
+          {% for error in form.name.errors %}
+          <li>
+            {{error}}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
+    <button type="submit" class="bt btn-primary">Add category</button>
   </form>
 
+  <h4>Existing categories</h4>
   <ul>
     {% for category in categories %}
     <li>
