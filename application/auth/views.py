@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, current_user
 
-from application import app, db, login_required
+from application import app, db, login_required, bcrypt
 from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm
 
@@ -15,8 +15,8 @@ def auth_login():
 
     form = LoginForm(request.form)
 
-    user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
-    if not user:
+    user = User.query.filter_by(username=form.username.data).first()
+    if not user or not bcrypt.check_password_hash(user.password, form.password.data):
         return render_template("auth/loginform.html", form = form,
                                error = "No such username or password")
 
@@ -32,7 +32,7 @@ def auth_logout():
 
 @app.route("/auth/create", methods = ["GET"])
 def auth_form():
-    return render_template("auth/new.html", form = UserForm())
+    return render_template("auth/new.html", form = UserForm(), userType="NORMAL")
 
 
 @app.route("/auth/", methods = ["POST"])
@@ -42,7 +42,8 @@ def auth_create():
     if not form.validate():
         return render_template("auth/new.html", form = form)
 
-    u = User(form.name.data, form.username.data, form.password.data, "NORMAL")
+    pw_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+    u = User(form.name.data, form.username.data, pw_hash, "NORMAL")
 
     db.session().add(u)
     db.session().commit()
@@ -55,14 +56,15 @@ def auth_create_admin():
     form = UserForm()
     
     if form.validate_on_submit():
-        u = User(form.name.data, form.username.data, form.password.data, "ADMIN")
+        pw_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        u = User(form.name.data, form.username.data, pw_hash, "ADMIN")
 
         db.session().add(u)
         db.session().commit()
 
         return redirect(url_for("auth_create_admin"))
     
-    return render_template("auth/newAdmin.html", form = form)
+    return render_template("auth/new.html", form = form, userType= "ADMIN")
 
 @app.route("/auth/users", methods=["GET"])
 @login_required("ADMIN")

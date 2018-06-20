@@ -2,8 +2,15 @@
 
 {% block body %}
 
-<form method="POST" action="{{ url_for('auth_create') }}">
-  <div class="form-group">
+<form method="POST" 
+{% if userType == "NORMAL" %}
+action="{{ url_for('auth_create') }}"
+{ % else % }
+action="{{ url_for('auth_create_admin') }}"
+{% endif %}
+>
+
+<div class="form-group">
     {{form.name.label}} {{form.name(class="form-control", placeholder="Enter your name")}}
     <div class="text-warning">
       <ul>
