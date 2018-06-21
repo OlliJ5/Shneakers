@@ -41,15 +41,17 @@ def threads_by_category(category_name, page_num):
 
 @app.route("/threads/one/<thread_id>")
 def thread_show(thread_id):
-    user_thread = UserThread(thread_id)
-
-    if current_user.is_authenticated:
-        user_thread.account_id = current_user.id
-
-    db.session().add(user_thread)
-    db.session().commit()    
-
     t = Thread.query.get(thread_id)
+
+    if t:
+        user_thread = UserThread(thread_id)
+
+        if current_user.is_authenticated:
+            user_thread.account_id = current_user.id
+
+        db.session().add(user_thread)
+        db.session().commit()    
+
     comments = Comment.query.filter_by(thread_id=thread_id).all()
 
     views = UserThread.how_many_viewers_a_thread_has(thread_id)

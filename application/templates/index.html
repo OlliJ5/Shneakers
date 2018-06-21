@@ -23,21 +23,6 @@
 {% endif %}
 
 <p>Welcome to Shneakers, the world's smalles sneakerhead community!</p>
-{% if leading_posters is defined %}
-<h2>
-  Here all our posters
-</h2>
+<p>We aim to help you reach like-minded people who are also interested in sneakers</p>
 
-<table>
-  {% for poster in leading_posters %}
-  <tr>
-    <td>
-      {{poster.username}}
-    </td>
-    <td>
-      {{poster.posts}}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %} {% endblock %}
+{% endblock %}

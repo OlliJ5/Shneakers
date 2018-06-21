@@ -38,16 +38,32 @@ class User(Base):
     def get_role(self):
         return self.role
 
+    #return a list of 5 users who have created the most threads
+
     @staticmethod
-    def find_how_many_tasks_each_user_has():
+    def top_five_posters_and_amount_of_posts():
         stmt = text("SELECT Account.id, Account.username, COUNT(Thread.id) FROM Account"
                     " LEFT JOIN Thread ON Thread.account_id = Account.id"
-                    " GROUP BY Account.id")
+                    " GROUP BY Account.id ORDER BY COUNT(Thread.id) DESC LIMIT 5")
 
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
             response.append({"id":row[0], "username":row[1], "posts":row[2]})
+
+        return response
+
+    @staticmethod
+    def top_five_commenters_and_amount_of_comments():
+        stmt = text("SELECT Account.id, Account.username, COUNT(Comment.id) FROM Account"
+                    " LEFT JOIN Comment ON Comment.account_id = Account.id"
+                    " GROUP BY Account.id ORDER BY COUNT(Comment.id) DESC LIMIT 5")
+        
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"id": row[0], "username":row[1], "comments":row[2]})
 
         return response

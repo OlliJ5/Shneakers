@@ -1,0 +1,51 @@
+{% extends "layout.html" %} 
+
+{% block body %}
+
+<h1>Shneakers Hall of fame</h1>
+
+<h2>Users</h2>
+
+{% if leading_posters is defined %}
+<h3>
+  Here are our top 5 posters
+</h3>
+
+<table>
+  {% for poster in leading_posters %}
+  <tr>
+    <td>
+      {{poster.username}}
+    </td>
+    <td>
+      {{poster.posts}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %} 
+
+{% if leading_commenters is defined %}
+<h3>
+  Here are our top 5 commenters
+</h3>
+
+<table>
+  {% for commenter in leading_commenters %}
+  <tr>
+    <td>
+      {{commenter.username}}
+    </td>
+    <td>
+      {{commenter.comments}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+
+<h2>Posts</h2>
+
+
+{% endblock %}

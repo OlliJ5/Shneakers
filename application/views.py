@@ -4,7 +4,13 @@ from application.auth.models import User
 
 @app.route("/")
 def index():
-    return render_template("index.html", leading_posters=User.find_how_many_tasks_each_user_has())
+    return render_template("index.html")
+
+@app.route("/statistics")
+def statistics():
+    return render_template("statistics.html",
+                            leading_posters = User.top_five_posters_and_amount_of_posts(),
+                            leading_commenters = User.top_five_commenters_and_amount_of_comments())
 
 @app.route("/admin")
 @login_required("ADMIN")
