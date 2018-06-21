@@ -1,6 +1,7 @@
 from flask import render_template
 from application import app, login_required
 from application.auth.models import User
+from application.threads.models import Thread
 
 @app.route("/")
 def index():
@@ -10,7 +11,8 @@ def index():
 def statistics():
     return render_template("statistics.html",
                             leading_posters = User.top_five_posters_and_amount_of_posts(),
-                            leading_commenters = User.top_five_commenters_and_amount_of_comments())
+                            leading_commenters = User.top_five_commenters_and_amount_of_comments(),
+                            most_commented_threads = Thread.most_commented_threads())
 
 @app.route("/admin")
 @login_required("ADMIN")

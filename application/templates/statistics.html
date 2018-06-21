@@ -47,5 +47,24 @@
 
 <h2>Posts</h2>
 
+{% if most_commented_threads is defined %}
+<h3>
+  Here are our top 5 most commented threads
+</h3>
+
+<table>
+  {% for thread in most_commented_threads %}
+  <tr>
+    <td>
+      {{thread.title}}
+    </td>
+    <td>
+      {{thread.comments}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
 
 {% endblock %}

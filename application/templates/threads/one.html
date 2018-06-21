@@ -34,6 +34,7 @@
 </div>
 
 <h5>Comments</h5>
+<p>Comments in this thread: {{comment_amount}}</p>
 
 {% if current_user.is_authenticated %}
 <form method="POST" action="{{ url_for('comment_post', thread_id=thread.id) }}" style="padding-bottom: 50px; padding-top: 20px">

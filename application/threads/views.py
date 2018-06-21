@@ -27,7 +27,7 @@ def threads_old(page_num):
     return render_template("threads/list.html",
                             threads = Thread.query
                                     .paginate(per_page=5, page=page_num, error_out=True),
-                            categories = Category.query.all())    
+                            categories = Category.query.all())   
 
 @app.route("/threads/all/<category_name>/<int:page_num>", methods=["GET"])
 def threads_by_category(category_name, page_num):
@@ -53,6 +53,7 @@ def thread_show(thread_id):
         db.session().commit()    
 
     comments = Comment.query.filter_by(thread_id=thread_id).all()
+    comment_amount = Comment.threads_comments(thread_id)
 
     views = UserThread.how_many_viewers_a_thread_has(thread_id)
     unique_views = UserThread.how_many_unique_viewers_a_thread_has(thread_id)
@@ -62,6 +63,7 @@ def thread_show(thread_id):
                             views = views,
                             unique_views=unique_views,
                             commentForm = CommentForm(),
+                            comment_amount = comment_amount,
                             comments = comments)
 
 @app.route("/thread/<thread_id>/edit")
