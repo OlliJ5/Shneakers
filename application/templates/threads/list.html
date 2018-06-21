@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div class="row">
+<div class="row" style="padding-bottom: 30px">
   <div class="col-lg-3 cl-md-3 col-sm-4 col-xs-12">
     <h1>Threads</h1>
   </div>
@@ -13,31 +13,52 @@
         Filter
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="{{ url_for('threads_index') }}">All</a>
+        <a class="dropdown-item" href="{{ url_for('threads_index', page_num=1) }}">All</a>
         {% for category in categories %}
-        <a class="dropdown-item" href="{{ url_for('threads_by_category', category_name=category.name) }}">{{category.name}}</a>
+        <a class="dropdown-item" href="{{ url_for('threads_by_category', category_name=category.name, page_num=1) }}">{{category.name}}</a>
         {% endfor %}
       </div>
     </div>
   </div>
 </div>
 
-{% for thread in threads %}
-<div class="row">
-  <div class="col">
-    <h5 style="word-wrap: break-word;">
-      <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
-      [{{thread.category_name}}]
-    </h5>
+{% for thread in threads.items %}
+  <div class="row">
+    <div class="col">
+      <h5 style="word-wrap:break-word;">
+        <a href="">{{thread.title}}</a>
+      </h5>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-8">
-    <p>Kirjoittaja:
-      <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
-    </p>
+  <div class="row">
+    <div class="col">
+      <h6>[{{thread.category_name}}]</h6>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-8">
+      <p>Kirjoittaja:
+        <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
+      </p>
+    </div>
+  </div>
 {% endfor %}
+
+<nav aria-label="Threads">
+  <ul class="pagination">
+    {% for page in threads.iter_pages() %}
+      {% if page %}
+        {% if category %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('threads_by_category', category_name=category, page_num = page)}}">{{ page }}</a></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('threads_index', page_num = page) }}">{{ page }}</a></li>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>
+
 
 {% endblock %}

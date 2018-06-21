@@ -14,19 +14,22 @@ from application.categories.models import Category
 
 from application.user_thread.models import UserThread
 
-@app.route("/threads/all", methods=["GET"])
-def threads_index():
+@app.route("/threads/<int:page_num>", methods=["GET"])
+def threads_index(page_num):
     return render_template("threads/list.html",
-                            threads = Thread.query.order_by(Thread.date_created.desc()).all(),
+                            threads = Thread.query
+                                    .order_by(Thread.date_created.desc())
+                                    .paginate(per_page=5, page=page_num, error_out=True),
                             categories = Category.query.all())
 
-@app.route("/threads/all/<category_name>", methods=["GET"])
-def threads_by_category(category_name):
+@app.route("/threads/all/<category_name>/<int:page_num>", methods=["GET"])
+def threads_by_category(category_name, page_num):
     return render_template("threads/list.html",
                             threads = Thread.query
                                             .filter_by(category_name=category_name)
                                             .order_by(Thread.date_created.desc())
-                                            .all(),
+                                            .paginate(per_page=5, page=page_num, error_out=True),
+                            category = category_name,
                             categories = Category.query.all())
 
 @app.route("/threads/one/<thread_id>")
@@ -96,7 +99,7 @@ def threads_create():
         t.category_name = Category.query.filter_by(id = form.category.data).first().name
         db.session().add(t)
         db.session().commit()
-        return redirect(url_for("threads_index"))
+        return redirect(url_for("threads_index", page_num=1))
         
     return render_template("threads/new.html", form = form)
 
@@ -116,5 +119,5 @@ def thread_delete(thread_id):
     db.session().delete(t)
     db.session().commit()
 
-    return redirect(url_for("threads_index"))
+    return redirect(url_for("threads_index", page_num=1))
 
