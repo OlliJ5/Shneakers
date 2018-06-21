@@ -13,7 +13,8 @@
         Filter
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="{{ url_for('threads_index', page_num=1) }}">All</a>
+        <a class="dropdown-item" href="{{ url_for('threads_index', page_num=1) }}">All (newest first)</a>
+        <a class="dropdown-item" href="{{ url_for('threads_old', page_num=1) }}">All (oldest first)</a>
         {% for category in categories %}
         <a class="dropdown-item" href="{{ url_for('threads_by_category', category_name=category.name, page_num=1) }}">{{category.name}}</a>
         {% endfor %}
@@ -26,7 +27,7 @@
   <div class="row">
     <div class="col">
       <h5 style="word-wrap:break-word;">
-        <a href="">{{thread.title}}</a>
+        <a href="{{ url_for('thread_show', thread_id=thread.id) }}">{{thread.title}}</a>
       </h5>
     </div>
   </div>

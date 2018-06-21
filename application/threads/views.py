@@ -22,6 +22,13 @@ def threads_index(page_num):
                                     .paginate(per_page=5, page=page_num, error_out=True),
                             categories = Category.query.all())
 
+@app.route("/threads/oldest/<int:page_num>", methods=["GET"])
+def threads_old(page_num):
+    return render_template("threads/list.html",
+                            threads = Thread.query
+                                    .paginate(per_page=5, page=page_num, error_out=True),
+                            categories = Category.query.all())    
+
 @app.route("/threads/all/<category_name>/<int:page_num>", methods=["GET"])
 def threads_by_category(category_name, page_num):
     return render_template("threads/list.html",
