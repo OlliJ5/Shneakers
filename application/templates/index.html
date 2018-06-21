@@ -1,26 +1,43 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} 
 
 {% block body %}
-    <h1>
-        Shneakers
-    </h1>
-    <p>Tervetuloa käyttämään kenkähulluille suunnattua keskustelufoorumia!</p>
-    {% if leading_posters is defined %}
-    <h2>
-        Kaikki postaajat
-    </h2>
 
-    <table>
-        {% for poster in leading_posters %}
-        <tr>
-            <td>
-                {{poster.username}}
-            </td>
-            <td>
-                {{poster.posts}}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
-{% endblock %}
+{% if current_user.is_authenticated %}
+<div class="jumbotron">
+    <h1 class="display-4">Shneakers</h1>
+    <p class="lead">The world's smallest sneakerhead community</p>
+    <hr class="my-4">
+    <p>Have something to share? Create a thread and hopefully someone will see it :)</p>
+    <p>You can tell us for example about the sneaker that made you fall in love with sneakers</p>
+    <a class="btn btn-primary" href="{{ url_for('threads_create') }}">Create a thread</a>
+  </div>
+{% else %}
+<div class="jumbotron">
+  <h1 class="display-4">Shneakers</h1>
+  <p class="lead">The world's smallest sneakerhead community -- Join us today!</p>
+  <hr class="my-4">
+  <p>Login or sign up to get started</p>
+  <p>I mean, you can just lurk too I guess..... :(</p>
+  <a class="btn btn-primary" href="{{ url_for('auth_form') }}">Sign up</a>
+</div>
+{% endif %}
+
+<p>Welcome to Shneakers, the world's smalles sneakerhead community!</p>
+{% if leading_posters is defined %}
+<h2>
+  Here all our posters
+</h2>
+
+<table>
+  {% for poster in leading_posters %}
+  <tr>
+    <td>
+      {{poster.username}}
+    </td>
+    <td>
+      {{poster.posts}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %} {% endblock %}

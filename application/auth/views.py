@@ -8,6 +8,9 @@ from application.auth.forms import LoginForm, UserForm
 from application.comments.models import Comment
 from application.threads.models import Thread
 
+from application.user_thread.models import UserThread
+
+
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
     if request.method == "GET":
@@ -90,6 +93,7 @@ def user_delete(user_id):
     threads = Thread.query.filter_by(account_id = user_id).all()
 
     for thread in threads:
+        UserThread.query.filter_by(thread_id = thread_id).delete()
         Comment.query.filter_by(thread_id = thread.id).delete()
 
     Thread.query.filter_by(account_id = user_id).delete()

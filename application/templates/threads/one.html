@@ -3,6 +3,14 @@
 {% block body %}
 
 <p style="font-size: 25px; font-weight: bold; word-wrap: break-word;">{{thread.title}}</p>
+<div class="row">
+  <div class="col-3">
+    <p>Total views: {{views}}</p>
+  </div>
+  <div class="col">
+    <p>Unique logged in viewers: {{unique_views}}</p>
+  </div>
+</div>
 <p>OP:
   <a href="{{ url_for('user_profile', user_id=thread.account_id) }}">{{thread.creator}}</a>
 </p>
@@ -13,7 +21,7 @@
     {% if current_user.id == thread.account_id or current_user.role == "ADMIN" %}
     <form method="POST" action="{{ url_for('thread_delete', thread_id=thread.id) }}">
       <div class="form-group">
-        <button type="submit" class="btn btn-danger">Delete thread</button>
+        <button type="submit" class="btn btn-danger btn-sm">Delete thread</button>
       </div>
     </form>
     {% endif %}
@@ -58,7 +66,7 @@
     <div class="col">
       {% if current_user.id == comment.account_id or current_user.role == "ADMIN" %}
       <form method="POST" action="{{ url_for('comment_delete', comment_id=comment.id) }}">
-        <button type="submit" class="btn btn-danger">Delete this nephew</button>
+        <button type="submit" class="btn btn-danger btn-sm">Delete this nephew</button>
       </form>
       {% endif %}
     </div>

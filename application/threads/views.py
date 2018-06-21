@@ -1,6 +1,8 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 
+from sqlalchemy import desc
+
 from application import app, db, login_required, login_manager
 from application.threads.models import Thread
 from application.threads.forms import ThreadForm, ThreadEditForm
@@ -15,16 +17,19 @@ from application.user_thread.models import UserThread
 @app.route("/threads/all", methods=["GET"])
 def threads_index():
     return render_template("threads/list.html",
-                            threads = Thread.query.all(),
+                            threads = Thread.query.order_by(Thread.date_created.desc()).all(),
                             categories = Category.query.all())
 
 @app.route("/threads/all/<category_name>", methods=["GET"])
 def threads_by_category(category_name):
     return render_template("threads/list.html",
-                            threads = Thread.query.filter_by(category_name=category_name).all(),
+                            threads = Thread.query
+                                            .filter_by(category_name=category_name)
+                                            .order_by(Thread.date_created.desc())
+                                            .all(),
                             categories = Category.query.all())
 
-@app.route("/threads/<thread_id>")
+@app.route("/threads/one/<thread_id>")
 def thread_show(thread_id):
     user_thread = UserThread(thread_id)
 
@@ -37,7 +42,15 @@ def thread_show(thread_id):
     t = Thread.query.get(thread_id)
     comments = Comment.query.filter_by(thread_id=thread_id).all()
 
-    return render_template("threads/one.html", thread = t, commentForm = CommentForm(), comments = comments)
+    views = UserThread.how_many_viewers_a_thread_has(thread_id)
+    unique_views = UserThread.how_many_unique_viewers_a_thread_has(thread_id)
+
+    return render_template("threads/one.html", 
+                            thread = t,
+                            views = views,
+                            unique_views=unique_views,
+                            commentForm = CommentForm(),
+                            comments = comments)
 
 @app.route("/thread/<thread_id>/edit")
 def thread_editform(thread_id):
