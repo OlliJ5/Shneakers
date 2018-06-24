@@ -108,8 +108,10 @@ def threads_create():
         t.account_id = current_user.id
         t.category_id = form.category.data
         t.category_name = Category.query.filter_by(id = form.category.data).first().name
+        
         db.session().add(t)
         db.session().commit()
+        
         return redirect(url_for("threads_index", page_num=1))
         
     return render_template("threads/new.html", form = form)

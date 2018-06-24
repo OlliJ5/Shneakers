@@ -66,12 +66,15 @@ from application.comments import views
 from application.auth import models
 from application.auth import views
 
-from application.categories import views
 from application.categories import models
+from application.categories import views
 
-from application.auth.models import User
+from application.collections import models
+from application.collections import views
 
 from application.user_thread.models import UserThread
+
+from application.auth.models import User
 
 @login_manager.user_loader
 def load_user(user_id):

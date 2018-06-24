@@ -14,6 +14,7 @@ class User(Base):
 
     createdThreads = db.relationship("Thread", backref='account', lazy=True)
     comments = db.relationship("Comment", backref='account', lazy=True)
+    collections = db.relationship("Collection", backref='account', lazy=True)
 
     user_threads = db.relationship("UserThread", backref='account', lazy=True)
 
