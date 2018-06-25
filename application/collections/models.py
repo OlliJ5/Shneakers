@@ -7,6 +7,7 @@ class Collection(Base):
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
+    shoes = db.relationship("Shoe", backref='collection', lazy=True)
 
     def __init__(self, name):
         self.name = name

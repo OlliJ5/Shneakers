@@ -1,0 +1,38 @@
+{% extends "profile.html" %}
+
+{% block body %}
+<div class="container">
+    <h3>{{collection.name}}</h3>
+    {% if collection.description %}
+    <p style="word-wrap: break-word;">{{collection.description}}</p>
+    {% endif %}
+
+    {% if current_user.id == user.id %}
+    <a href="{{ url_for('shoes_new') }}">Add a shoe to collection</a>
+    {% endif %}
+
+    <ul class="list-group list-group-flush">
+        {% for shoe in shoes %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col">
+                    Model: {{shoe.model}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Brand: {{shoe.brand}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Release year: {{shoe.release_year}}
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}

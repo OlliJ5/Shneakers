@@ -1,0 +1,15 @@
+{% extends "profile.html" %} 
+
+{% block body %}
+
+<div class="container">
+  <ul class="list-group list-group-flush">
+    {% for comment in comments %}
+    <li class="list-group-item">
+      <a href="{{ url_for('thread_show', thread_id = comment.thread_id) }}">{{ comment.text }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

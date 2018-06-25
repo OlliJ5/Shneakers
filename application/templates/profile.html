@@ -1,0 +1,20 @@
+{% include "layout.html" %} 
+
+<div class="container">
+    <h1>User: {{ user.username }}</h1>
+    
+    <ul class="nav" style="padding-bottom: 50px">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user_profile', user_id = user.id) }}">Posts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('comments_by_user', user_id = user.id) }}">Comments</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list_user_collections', user_id = user.id) }}">Collections</a>
+        </li>
+    </ul>
+</div>
+
+{% block body %}
+{% endblock %}

@@ -72,6 +72,9 @@ from application.categories import views
 from application.collections import models
 from application.collections import views
 
+from application.shoes import models
+from application.shoes import views
+
 from application.user_thread.models import UserThread
 
 from application.auth.models import User

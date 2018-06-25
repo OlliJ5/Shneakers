@@ -12,6 +12,8 @@ from application.comments.models import Comment
 
 from application.categories.models import Category
 
+from application.auth.models import User
+
 from application.user_thread.models import UserThread
 
 @app.route("/threads/<int:page_num>", methods=["GET"])
@@ -38,6 +40,14 @@ def threads_by_category(category_name, page_num):
                                             .paginate(per_page=5, page=page_num, error_out=True),
                             category = category_name,
                             categories = Category.query.all())
+
+@app.route("/auth/users/<user_id>", methods=["GET"])
+def user_profile(user_id):
+    u = User.query.get(user_id)
+    posts = Thread.query.filter_by(account_id = user_id).all()
+
+    return render_template("threads/profileThreads.html", user = u,
+                                                posts = posts)
 
 @app.route("/threads/one/<thread_id>")
 def thread_show(thread_id):

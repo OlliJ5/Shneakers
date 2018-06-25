@@ -1,0 +1,21 @@
+{% extends "profile.html" %}
+
+{% block body %}
+<div class="container">
+  {% for post in posts %}
+  <div class="row">
+    <div class="col">
+      <h5 style="word-wrap:break-word;">
+        <a href="{{ url_for('thread_show', thread_id=post.id) }}">{{post.title}}</a>
+      </h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h6>[{{ post.category_name }} ]</h6>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

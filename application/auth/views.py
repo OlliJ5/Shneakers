@@ -10,6 +10,9 @@ from application.threads.models import Thread
 
 from application.user_thread.models import UserThread
 
+from application.collections.models import Collection
+
+from application.shoes.models import Shoe
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -74,12 +77,6 @@ def auth_create_admin():
 def auth_show_users():
     return render_template("auth/list.html", users = User.query.all())
 
-@app.route("/auth/users/<user_id>", methods=["GET"])
-def user_profile(user_id):
-    u = User.query.get(user_id)
-
-    return render_template("auth/profile.html", user = u)
-
 @app.route("/auth/delete/<user_id>", methods=["POST"])
 @login_required()
 def user_delete(user_id):
@@ -93,10 +90,17 @@ def user_delete(user_id):
     threads = Thread.query.filter_by(account_id = user_id).all()
 
     for thread in threads:
-        UserThread.query.filter_by(thread_id = thread_id).delete()
+        UserThread.query.filter_by(thread_id = thread.id).delete()
         Comment.query.filter_by(thread_id = thread.id).delete()
 
     Thread.query.filter_by(account_id = user_id).delete()
+   
+    collections = Collection.query.filter_by(account_id = user_id).all()
+
+    for collection in collections:
+        Shoe.query.filter_by(collection_id = collection.id).delete()
+
+    Collection.query.filter_by(account_id = user_id).delete()
 
     db.session().delete(u)
     db.session().commit()

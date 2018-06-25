@@ -8,6 +8,8 @@ from application.comments.forms import CommentForm
 from application.threads.forms import ThreadForm
 from application.threads.models import Thread
 
+from application.auth.models import User
+
 @app.route("/comments/<thread_id>", methods=["POST"])
 @login_required()
 def comment_post(thread_id):
@@ -54,6 +56,14 @@ def comment_edit(comment_id):
     db.session().commit()
 
     return redirect(url_for("thread_show", thread_id=c.thread_id))
+
+@app.route("/comments/users/<user_id>", methods=["GET"])
+def comments_by_user(user_id):
+    u = User.query.get(user_id)
+    comments = Comment.query.filter_by(account_id = user_id).all()
+
+    return render_template("comments/profileComments.html", user = u,
+                                                        comments = comments)
 
 @app.route("/comments/delete/<comment_id>", methods=["POST"])
 @login_required()
