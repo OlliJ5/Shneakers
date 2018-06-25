@@ -20,7 +20,7 @@ Toimintoja:
 
 [Linkki sovellukseen herokussa](https://shneakers.herokuapp.com/)
 
-Testitunnkset:
+Testitunnukset:
 
 Normaali käyttäjä
 ```
@@ -35,6 +35,8 @@ Salasana: admin123
 
 ## Dokumentaatio
 
+[Yleinen dokumentaatio](https://github.com/OlliJ5/Shneakers/blob/master/documentation/documentation.md)
+* Sovelluksen rajoitteet, puutuvat ominaisuudet, omat kokemuket, jatkokehitysideat
 
 [User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
 
