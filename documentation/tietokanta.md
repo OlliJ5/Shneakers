@@ -115,4 +115,55 @@ komanteen normaalimuotoon poistamalla sarakkeet creator ja category_name ja selv
 kun niitä tarvitsee (eli usein, jonka vuoksi päädyin lisämään ne tauluun alunperin)
 
 ### Indeksointi
-
+#### Account
+```
+CREATE INDEX idx_account_id on Account (id);
+```
+#### Category
+```
+CREATE INDEX idx_category_id on Category (id);
+```
+#### Thread
+```
+CREATE INDEX idx_thread_id on Thread (id);
+```
+```
+CREATE INDEX idx_thread_account_id on Thread (account_id);
+```
+```
+CREATE INDEX idx_thread_category_id on Thread (category_id);
+```
+#### Comment
+```
+CREATE INDEX idx_comment_id on Comment (id);
+```
+```
+CREATE INDEX idx_comment_account_id on Comment (account_id);
+```
+```
+CREATE INDEX idx_comment_thread_id on Comment (thread_id);
+```
+#### User_thread
+```
+CREATE INDEX idx_user_thread_id on user_thread (id);
+```
+```
+CREATE INDEX idx_user_thread_account_id on user_thread (account_id);
+```
+```
+CREATE INDEX idx_user_thread_thread_id on user_thread (thread_id);
+```
+#### Collection
+```
+CREATE INDEX idx_collection_id on Collection (id);
+```
+```
+CREATE INDEX idx_collection_account_id on Collection(account_id);
+```
+#### Shoe
+```
+CREATE INDEX idx_shoe_id on Shoe (id);
+```
+```
+CREATE INDEX idx_shoe_collection_id on Shoe (collection_id);
+```
