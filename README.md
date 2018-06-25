@@ -35,13 +35,13 @@ Salasana: admin123
 
 ## Dokumentaatio
 
-[Yleinen dokumentaatio](https://github.com/OlliJ5/Shneakers/blob/master/documentation/documentation.md)
-* Sovelluksen rajoitteet, puutuvat ominaisuudet, omat kokemuket, jatkokehitysideat
-
-[User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
-
-[Tietokantakaavio](https://github.com/OlliJ5/Shneakers/blob/master/documentation/Tietokantakaavio.png)
-
 [Asennusohje](https://github.com/OlliJ5/Shneakers/blob/master/documentation/asennusohje.md)
 
 [Käyttöohje](https://github.com/OlliJ5/Shneakers/blob/master/documentation/kayttoohje.md)
+
+[User Storyt eli käyttötapaukset](https://github.com/OlliJ5/Shneakers/blob/master/documentation/userStories.md)
+
+[Tietokanantarakenteen kuvaus](https://github.com/OlliJ5/Shneakers/blob/master/documentation/tietokanta.md)
+
+[Yleinen dokumentaatio](https://github.com/OlliJ5/Shneakers/blob/master/documentation/documentation.md)
+* Sovelluksen rajoitteet, puutuvat ominaisuudet, omat kokemuket, jatkokehitysideat
