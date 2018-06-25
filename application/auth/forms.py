@@ -11,9 +11,10 @@ class LoginForm(FlaskForm):
         csrf = False
 
 class UserForm(FlaskForm):
-    name = StringField("Name", [validators.DataRequired(), validators.Length(min=2)])
-    username = StringField("Username", [validators.DataRequired(), validators.Length(min=3), Unique(User, User.username, "Username already in use!")])
-    password = PasswordField("Password", [validators.DataRequired(), validators.Length(min=5)])
+    name = StringField("Name", [validators.DataRequired(), validators.Length(min=2, max=30)])
+    username = StringField("Username", [validators.DataRequired(), validators.Length(min=3, max=25), Unique(User, User.username, "Username already in use!")])
+    password = PasswordField("Password", [validators.DataRequired(), validators.Length(min=5, max=30)])
 
     class Meta:
         csrf = False
+        
