@@ -2,12 +2,12 @@
 
 {% block body %}
 
-<h1>Shneakers Hall of fame</h1>
+<h1 style="padding-bottom: 50px">Shneakers Hall of fame</h1>
 
-<h2>Users</h2>
+<h2 style="padding-bottom: 30px">Users</h2>
 
 {% if leading_posters is defined %}
-<h3>
+<h3 style="padding-bottom: 20px">
   Here are our top 5 posters
 </h3>
 
@@ -26,7 +26,7 @@
 {% endif %} 
 
 {% if leading_commenters is defined %}
-<h3>
+<h3 style="padding-top: 30px; padding-bottom: 20px">
   Here are our top 5 commenters
 </h3>
 
@@ -45,10 +45,10 @@
 {% endif %}
 
 
-<h2>Posts</h2>
+<h2 style="padding-top: 50px; padding-bottom: 30px">Posts</h2>
 
 {% if most_commented_threads is defined %}
-<h3>
+<h3 style="padding-bottom: 20px">
   Here are our top 5 most commented threads
 </h3>
 
